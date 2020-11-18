@@ -7,9 +7,9 @@ class MatrixColorPlot : public QWidget
 	Q_OBJECT
 
 public:
-	static constexpr qreal CAPTIONRECT_WIDTH = 40;
+	static constexpr qreal CAPTIONRECT_WIDTH = 30;
 	static constexpr qreal LABEL_SIZE = 20;
-	static constexpr qreal TILE_SIZE = 30;
+	static constexpr qreal TILE_SIZE = 20;
 	static constexpr qreal XLABELS_START_X = CAPTIONRECT_WIDTH + LABEL_SIZE;
 	static constexpr qreal XLABELS_START_Y = CAPTIONRECT_WIDTH;
 	static constexpr qreal YLABELS_START_X = CAPTIONRECT_WIDTH;

@@ -27,7 +27,7 @@ private:
     static void displayTable(QTableWidget* chartView,
         const FrequencyData& data, const QString& dataColumnName);
 
-    void refreshAlphabet();
+    bool refreshAlphabet();
     std::vector<int> getCharCounts(const QString&);
     void analyzeChars(const QString&);
     void analyzeBigrams(const QString&);

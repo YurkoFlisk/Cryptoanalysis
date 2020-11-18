@@ -86,13 +86,16 @@ void CryptoAnalysis::analyze()
 		return;
 	}
 
-	refreshAlphabet();
+	if (!refreshAlphabet())
+		return;
+
 	analyzeChars(text);
 	analyzeBigrams(text);
 	analyzeTrigrams(text);
+	ui.bigramsMCP->update();
 }
 
-void CryptoAnalysis::refreshAlphabet()
+bool CryptoAnalysis::refreshAlphabet()
 {
 	caseSensitive = ui.caseSensitiveCheckBox->isChecked();
 	alphabet = ui.alphabetLE->text();
@@ -106,13 +109,14 @@ void CryptoAnalysis::refreshAlphabet()
 				"Alphabet contains identical characters. "
 				"Note: if 'case sensitive' is false, check that you "
 				"don't include same letter in both upper and lower case"));
-			return;
+			return false;
 		}
 		alphabet[i] = ch;
 		charIndex[ch] = i;
 	}
 	// Now alphabet chars have (by convention) lower case if not caseSensitive
 	ui.alphabetLE->setText(alphabet);
+	return true;
 }
 
 std::vector<int> CryptoAnalysis::getCharCounts(const QString& text)
@@ -225,12 +229,13 @@ void CryptoAnalysis::analyzeTrigrams(const QString& text)
 
 	sortByFrequencyAndShrink(trigramFreqs, 30);
 	displayBarChart(ui.trigramsChartView, trigramFreqs);
-	displayTable(ui.trigramsTableWidget, trigramFreqs, tr("Bigram"));
+	displayTable(ui.trigramsTableWidget, trigramFreqs, tr("Trigram"));
 }
 
 void CryptoAnalysis::encrypt()
 {
-	refreshAlphabet();
+	if (!refreshAlphabet())
+		return;
 
 	const int m = alphabet.size();
 	int a = ui.aSB->value(), b = ui.bSB->value();
